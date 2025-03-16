@@ -235,6 +235,8 @@ async def help(ctx):
     await ctx.send(embed=embed)
 
 from datetime import datetime
+import os
+
 @bot.command()
 async def clip(ctx, user: str):
     """Reposts the attachment from the user's message, mentions the user, and deletes the original message."""
@@ -242,6 +244,11 @@ async def clip(ctx, user: str):
         # Get the attachment from the message
         attachment = ctx.message.attachments[0]
         
+        # Check if the file size is too large (Discord max file size is 8MB)
+        if attachment.size > 8 * 1024 * 1024:
+            await ctx.send("This content is too big. Try to compress it using this tool: https://www.freeconvert.com/video-compressor")
+            return
+
         # Download the file to repost it
         file = await attachment.to_file()
 
@@ -265,6 +272,14 @@ async def clip(ctx, user: str):
     else:
         await ctx.send("No attachment found in the message to clip.")
 
+@bot.command()
+async def send_message(ctx, *, message: str):
+    """Sends a message with a length check."""
+    # Check if the message length exceeds Discord's 2000 character limit
+    if len(message) > 2000:
+        await ctx.send("This content is too big. Try to compress it using this tool: https://www.freeconvert.com/video-compressor")
+    else:
+        await ctx.send(message)
 
 @bot.command()
 async def clips(ctx, user: str):
