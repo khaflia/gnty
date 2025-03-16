@@ -6,7 +6,7 @@ from collections import Counter
 import requests
 from dotenv import load_dotenv
 import os
-
+import webserver
 # MongoDB setup
 MONGO_URI = "mongodb+srv://khalifakalansari:Kh2382009@cluster0.qm03hvg.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"  # Replace this with your actual MongoDB URI
 client = MongoClient(MONGO_URI)
@@ -316,5 +316,5 @@ async def clips(ctx, user: str):
         await ctx.send(f"No clips found for user {user}.")
 
 
-
+webserver.keep_alive()
 bot.run(os.getenv("DISCORD_BOT_TOKEN"))
