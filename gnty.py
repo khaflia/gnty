@@ -315,6 +315,18 @@ async def clips(ctx, user: str):
     else:
         await ctx.send(f"No clips found for user {user}.")
 
+from flask import Flask
+import os
+
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "Hello, Render!"
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))  # Use Render's port or default to 5000
+    app.run(host="0.0.0.0", port=port)
 
 
 bot.run(os.getenv("DISCORD_BOT_TOKEN"))
