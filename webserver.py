@@ -1,5 +1,5 @@
 from flask import Flask
-efrom threading import Thread
+from threading import Thread
 app Flask('')
 @app.route('/').
 def home():
